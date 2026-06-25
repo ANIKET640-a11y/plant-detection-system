@@ -21,7 +21,7 @@ code {
   color: white !important;
 }
 
-/* Global Responsive Navigation Header */
+/* Global Navigation Header */
 .plant-nav {
   display: flex !important;
   align-items: center !important;
@@ -34,6 +34,8 @@ code {
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
   transition: all 0.3s ease !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
 }
 
 .plant-nav-links {
@@ -42,6 +44,14 @@ code {
   justify-content: center !important;
   gap: 6px !important;
   flex: 1 !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.plant-nav-links::-webkit-scrollbar {
+  display: none !important; /* Safari/Chrome */
 }
 
 .plant-nav-link {
@@ -81,20 +91,12 @@ code {
 
 @media (max-width: 760px) {
   .plant-nav {
-    flex-wrap: wrap !important;
     padding: 10px 16px !important;
     gap: 8px !important;
   }
   .plant-nav-links {
-    order: 3 !important;
-    width: 100% !important;
-    overflow-x: auto !important;
     justify-content: flex-start !important;
-    padding: 6px 0 2px !important;
-    scrollbar-width: none !important; /* Firefox */
-  }
-  .plant-nav-links::-webkit-scrollbar {
-    display: none !important; /* Safari/Chrome */
+    padding: 0 4px !important;
   }
   .plant-nav-link {
     font-size: 12px !important;
@@ -107,7 +109,8 @@ code {
     display: none !important;
   }
   .plant-nav {
-    padding: 8px 12px !important;
+    padding: 8px 10px !important;
+    gap: 6px !important;
   }
 }
 

@@ -268,18 +268,78 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
         }
         @media (max-width: 768px) {
           .stores-container {
-            flex-direction: column-reverse !important;
+            flex-direction: row !important;
           }
           .stores-sidebar {
-            width: 100% !important;
-            height: 50% !important;
-            border-right: none !important;
-            border-top: 1px solid ${T.border} !important;
-            padding: 16px !important;
+            width: clamp(155px, 38vw, 240px) !important;
+            padding: 12px 8px !important;
+            border-right: 1px solid ${T.border} !important;
+            border-top: none !important;
           }
           .stores-map-wrapper {
-            width: 100% !important;
-            height: 50% !important;
+            flex: 1 !important;
+            height: 100% !important;
+          }
+          .stores-sidebar-title {
+            font-size: 14px !important;
+            margin-bottom: 10px !important;
+          }
+          .store-locator-card {
+            padding: 16px 8px !important;
+            border-radius: 12px !important;
+          }
+          .store-locator-icon {
+            font-size: 24px !important;
+            margin-bottom: 8px !important;
+          }
+          .store-locator-text {
+            font-size: 10px !important;
+            line-height: 1.4 !important;
+            margin-bottom: 12px !important;
+          }
+          .store-locator-btn {
+            padding: 8px 4px !important;
+            font-size: 10px !important;
+            border-radius: 8px !important;
+          }
+          .store-item {
+            padding: 8px 6px !important;
+            gap: 6px !important;
+            border-radius: 8px !important;
+          }
+          .store-icon-wrapper {
+            width: 28px !important;
+            height: 28px !important;
+            font-size: 14px !important;
+            border-radius: 6px !important;
+          }
+          .store-name {
+            font-size: 11px !important;
+          }
+          .store-info-text {
+            font-size: 9px !important;
+          }
+          .store-status-badge {
+            font-size: 8px !important;
+            padding: 1px 4px !important;
+          }
+          .store-directions-btn {
+            font-size: 9px !important;
+          }
+          .map-placeholder-card {
+            padding: 16px 10px !important;
+          }
+          .map-placeholder-icon {
+            font-size: 28px !important;
+            margin-bottom: 8px !important;
+          }
+          .map-placeholder-title {
+            font-size: 14px !important;
+            margin-bottom: 6px !important;
+          }
+          .map-placeholder-desc {
+            font-size: 10px !important;
+            line-height: 1.4 !important;
           }
         }
       `}</style>
@@ -310,20 +370,20 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
         {/* Left sidebar: Geolocation trigger and store listing */}
         <div className="stores-sidebar" style={{ borderRight: `1px solid ${T.border}`, background: darkMode ? "#1c1a18" : "#fbfaf7" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-            <h2 style={{ fontFamily: "'Lora', serif", fontSize: 20, color: T.text, fontWeight: 500, margin: 0 }}>
+            <h2 className="stores-sidebar-title" style={{ fontFamily: "'Lora', serif", fontSize: 20, color: T.text, fontWeight: 500, margin: 0 }}>
               📍 {t.nearbyStores}
             </h2>
           </div>
 
           {!stores && !loading && (
-            <div style={{ textAlign: "center", padding: "40px 10px", background: darkMode ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.015)", border: `1px dashed ${T.border}`, borderRadius: 16 }}>
-              <div style={{ fontSize: 44, marginBottom: 14 }}>🏪</div>
-              <p style={{ fontSize: 13, color: T.sub, lineHeight: 1.6, marginBottom: 20 }}>
+            <div className="store-locator-card" style={{ textAlign: "center", padding: "40px 10px", background: darkMode ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.015)", border: `1px dashed ${T.border}`, borderRadius: 16 }}>
+              <div className="store-locator-icon" style={{ fontSize: 44, marginBottom: 14 }}>🏪</div>
+              <p className="store-locator-text" style={{ fontSize: 13, color: T.sub, lineHeight: 1.6, marginBottom: 20 }}>
                 {lang === "hi" 
                   ? "अपने क्षेत्र में उर्वरक, बीज और कीटनाशकों की दुकानों को खोजने के लिए स्थान सक्षम करें।" 
                   : "Enable location services to find agricultural stores, pesticide dealers, and nurseries near you."}
               </p>
-              <button onClick={findStores} style={{ width: "100%", background: "#5a7a5a", color: "#fff", border: "none", borderRadius: 10, padding: "12px", fontSize: 14, fontWeight: 500, cursor: "pointer", fontFamily: "'Jost', sans-serif" }}>
+              <button className="store-locator-btn" onClick={findStores} style={{ width: "100%", background: "#5a7a5a", color: "#fff", border: "none", borderRadius: 10, padding: "12px", fontSize: 14, fontWeight: 500, cursor: "pointer", fontFamily: "'Jost', sans-serif" }}>
                 {lang === "hi" ? "दुकानें खोजें" : "Locate Nearby Stores"}
               </button>
             </div>
@@ -364,22 +424,23 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
                       cursor: "pointer"
                     }}
                   >
-                    <div style={{ fontSize: 24, width: 44, height: 44, background: darkMode ? "rgba(255,255,255,0.04)" : "#fff", border: `1px solid ${T.border}`, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <div className="store-icon-wrapper" style={{ fontSize: 24, width: 44, height: 44, background: darkMode ? "rgba(255,255,255,0.04)" : "#fff", border: `1px solid ${T.border}`, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       🏪
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 2, textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
+                      <p className="store-name" style={{ fontSize: 14, fontWeight: 600, color: T.text, marginBottom: 2, textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
                         {store.name}
                       </p>
-                      <p style={{ fontSize: 11, color: T.sub }}>
+                      <p className="store-info-text" style={{ fontSize: 11, color: T.sub }}>
                         {store.type} · {store.distance < 1000 ? `${store.distance}m` : `${(store.distance/1000).toFixed(1)}km`}
                       </p>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
-                      <span style={{ fontSize: 10, padding: "2px 7px", borderRadius: 20, fontWeight: 500, background: store.open ? "#edf5ed" : "rgba(0,0,0,0.05)", color: store.open ? "#3d7a3d" : T.sub, border: `1px solid ${store.open ? "#c6e0c6" : T.border}` }}>
+                      <span className="store-status-badge" style={{ fontSize: 10, padding: "2px 7px", borderRadius: 20, fontWeight: 500, background: store.open ? "#edf5ed" : "rgba(0,0,0,0.05)", color: store.open ? "#3d7a3d" : T.sub, border: `1px solid ${store.open ? "#c6e0c6" : T.border}` }}>
                         {store.open ? t.storeOpen : t.storeClosed}
                       </span>
                       <button 
+                        className="store-directions-btn"
                         onClick={(e) => getStoreDirections(e, store)} 
                         style={{ background: "none", border: "none", color: "#5a7a5a", fontSize: 12, textDecoration: "underline", cursor: "pointer", padding: 0 }}
                       >
@@ -403,12 +464,12 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
         <div className="stores-map-wrapper">
           <div id="leaflet-map" style={{ height: "100%", width: "100%", zIndex: 1 }} />
           {!stores && (
-            <div style={{ position: "absolute", inset: 0, zIndex: 2, background: darkMode ? "rgba(20,18,16,0.8)" : "rgba(247,245,240,0.8)", backdropFilter: "blur(4px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20, textAlign: "center" }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>🗺️</div>
-              <h3 style={{ fontFamily: "'Lora', serif", color: T.text, fontWeight: 500, marginBottom: 8 }}>
+            <div className="map-placeholder-card" style={{ position: "absolute", inset: 0, zIndex: 2, background: darkMode ? "rgba(20,18,16,0.8)" : "rgba(247,245,240,0.8)", backdropFilter: "blur(4px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20, textAlign: "center" }}>
+              <div className="map-placeholder-icon" style={{ fontSize: 48, marginBottom: 16 }}>🗺️</div>
+              <h3 className="map-placeholder-title" style={{ fontFamily: "'Lora', serif", color: T.text, fontWeight: 500, marginBottom: 8 }}>
                 {lang === "hi" ? "नक्शा देखने के लिए अपनी स्थिति खोजें" : "Interactive Agricultural Map"}
               </h3>
-              <p style={{ fontSize: 13, color: T.sub, maxWidth: 320, margin: 0 }}>
+              <p className="map-placeholder-desc" style={{ fontSize: 13, color: T.sub, maxWidth: 320, margin: 0 }}>
                 {lang === "hi" ? "एक बार स्थान प्राप्त होने पर यह नक्शा पास की सभी कृषि दुकानों को प्रदर्शित करेगा।" : "This map will activate and plot all local stores once location coordinates are established."}
               </p>
             </div>

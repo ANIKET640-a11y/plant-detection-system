@@ -324,11 +324,6 @@ const css = `
 
   .plant-nav-link { background:none; border:0; color:inherit; cursor:pointer; font:500 12px 'Jost',sans-serif; padding:7px 9px; border-radius:8px; white-space:nowrap; }
   .plant-nav-link:hover { background:rgba(90,122,90,.14); color:#8fb38f !important; }
-  @media (max-width: 760px) {
-    .plant-nav-links { order:3; width:100%; overflow-x:auto; justify-content:flex-start !important; padding-top:8px; scrollbar-width:none; }
-    .plant-nav { flex-wrap:wrap; padding:12px 16px !important; }
-    .plant-nav-actions .theme-label { display:none; }
-  }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
   }

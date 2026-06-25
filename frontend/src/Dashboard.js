@@ -67,10 +67,9 @@ export const Dashboard = ({ history, darkMode, lang, onBack }) => {
   return (
     <div style={{ minHeight:"100vh", background:T.bg, fontFamily:"'Jost', sans-serif" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap');
-      .plant-nav { display:flex; alignItems:center; justifyContent:space-between; gap:14px; padding:16px 32px; backdrop-filter:blur(14px); position:sticky; top:0; z-index:100; }
-      .plant-nav-links { display:flex; alignItems:center; justifyContent:center; gap:16px; flex:1; }
-      .plant-nav-link { background:none; border:0; cursor:pointer; font:500 12px 'Jost',sans-serif; }
-      @media (max-width: 768px) { .plant-nav-links { display: none; } }`}</style>
+       .plant-nav { display:flex; alignItems:center; justifyContent:space-between; gap:14px; padding:16px 32px; backdrop-filter:blur(14px); position:sticky; top:0; z-index:100; }
+       .plant-nav-links { display:flex; alignItems:center; justifyContent:center; gap:16px; flex:1; }
+       .plant-nav-link { background:none; border:0; cursor:pointer; font:500 12px 'Jost',sans-serif; }`}</style>
 
       <nav className="plant-nav" style={{ borderBottom:`1px solid ${T.border}`, background:darkMode?"rgba(20,18,16,0.95)":"rgba(247,245,240,0.95)" }}>
         <button onClick={() => onBack("home")} style={{ fontFamily:"'Lora', serif", fontSize:18, color:T.text, background:"none", border:0, cursor:"pointer", flexShrink:0, display:"flex", alignItems:"center" }}>
