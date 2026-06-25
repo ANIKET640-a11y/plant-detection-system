@@ -2159,11 +2159,11 @@ export const ImageUpload = ({
   return (
     <>
       <style>{css}</style>
-      <nav className="plant-nav" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:14, padding:"14px 28px", borderBottom:`1px solid ${T.navBorder}`, background:T.navBg, backdropFilter:"blur(14px)", position:"sticky", top:0, zIndex:100 }}>
+      <nav className="plant-nav" style={{ borderBottom:`1px solid ${T.navBorder}`, background:T.navBg, position:"sticky", top:0, zIndex:100 }}>
         <button onClick={()=>scrollTo("home")} style={{ fontFamily:"'Lora', serif", fontSize:18, color:T.text, background:"none", border:0, cursor:"pointer", flexShrink:0 }}>
           Plant<em style={{ color:"#5a7a5a", fontStyle:"italic" }}>Pulse</em>
         </button>
-        <div className="plant-nav-links" style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:2, color:T.btnText, flex:1 }}>
+        <div className="plant-nav-links" style={{ color:T.btnText }}>
           <button className="plant-nav-link" onClick={()=>scrollTo("home")}>{t.navHome}</button>
           <button className="plant-nav-link" onClick={()=>scrollTo("scan")}>{t.navScan}</button>
           <button className="plant-nav-link" onClick={()=>scrollTo("weather")}>{t.navWeather}</button>
@@ -2172,7 +2172,7 @@ export const ImageUpload = ({
           <button className="plant-nav-link" onClick={onStores}>📍 {t.navStores}</button>
           <button className="plant-nav-link" onClick={onDashboard}>▦ {t.navDashboard}</button>
         </div>
-        <div className="plant-nav-actions" style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+        <div className="plant-nav-actions" style={{ gap:8 }}>
           <div style={{ position:"relative" }}>
             <button onClick={()=>setLangOpen(!langOpen)} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, borderRadius:8, padding:"5px 12px", fontSize:12, color:T.text, cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}>
               🌐 {LANGS[lang].label} ▾
