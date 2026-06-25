@@ -237,7 +237,7 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, fontFamily: "'Jost', sans-serif", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "100vh", background: T.bg, fontFamily: "'Jost', sans-serif", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap');
         
@@ -252,7 +252,6 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
         .stores-container {
           display: flex;
           flex: 1;
-          height: calc(100vh - 65px);
           overflow: hidden;
         }
         .stores-sidebar {
@@ -270,7 +269,6 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
         @media (max-width: 768px) {
           .stores-container {
             flex-direction: column-reverse !important;
-            height: calc(100vh - 100px) !important;
           }
           .stores-sidebar {
             width: 100% !important;
