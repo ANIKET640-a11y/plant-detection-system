@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getImageFromDB, deleteImageFromDB, clearImagesDB } from "./db";
 
 const THEME = {
   dark: { 
@@ -72,6 +73,34 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
 
   const [deletingIds, setDeletingIds] = useState(new Set());
   const [showConfirm, setShowConfirm] = useState(false);
+  const [resolvedUrls, setResolvedUrls] = useState({});
+
+  useEffect(() => {
+    let isMounted = true;
+    const resolved = {};
+
+    const loadImages = async () => {
+      for (const entry of history) {
+        try {
+          const blob = await getImageFromDB(entry.id);
+          if (blob && isMounted) {
+            resolved[entry.id] = URL.createObjectURL(blob);
+          }
+        } catch (err) {
+          console.error("IndexedDB fetch error for item", entry.id, err);
+        }
+      }
+      if (isMounted) {
+        setResolvedUrls(resolved);
+      }
+    };
+
+    loadImages();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [history]);
 
   const handleDelete = (e, id) => {
     e.stopPropagation();
@@ -82,8 +111,13 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
     });
 
     // Wait for the exit animation to complete before removing from state
-    setTimeout(() => {
+    setTimeout(async () => {
       setHistory(history.filter(item => item.id !== id));
+      try {
+        await deleteImageFromDB(id);
+      } catch (err) {
+        console.error(err);
+      }
       setDeletingIds(prev => {
         const next = new Set(prev);
         next.delete(id);
@@ -92,8 +126,13 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
     }, 350);
   };
 
-  const handleClearAll = () => {
+  const handleClearAll = async () => {
     setHistory([]);
+    try {
+      await clearImagesDB();
+    } catch (err) {
+      console.error(err);
+    }
     setShowConfirm(false);
   };
 
@@ -102,7 +141,7 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
       onRestore({
         class: entry.class,
         confidence: parseFloat(entry.confidence) / 100,
-        imageUrl: entry.imageUrl
+        imageUrl: resolvedUrls[entry.id] || entry.imageUrl
       });
     }
   };
@@ -257,9 +296,9 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
                 >
                   {/* Card Image Thumbnail */}
                   <div style={{ position: "relative", height: 160, background: darkMode ? "#22201d" : "#eae6de", overflow: "hidden" }}>
-                    {entry.imageUrl ? (
+                    {(resolvedUrls[entry.id] || entry.imageUrl) ? (
                       <img 
-                        src={entry.imageUrl} 
+                        src={resolvedUrls[entry.id] || entry.imageUrl} 
                         alt={formattedName}
                         style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
                         onMouseOver={e => e.currentTarget.style.transform = "scale(1.06)"}

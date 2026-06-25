@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import React from "react";
 import axios from "axios";
+import { saveImageToDB } from "./db";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const BG_URL = "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=1920&q=80";
@@ -2008,8 +2009,15 @@ export const ImageUpload = ({
   const toggleDark = () => { const n=!darkMode; setDarkMode(n); localStorage.setItem("plantpulse_dark",String(n)); };
   const changeLang = (l) => { if (!SUPPORTED_LANGS.includes(l)) return; setLang(l); setLangOpen(false); localStorage.setItem("plantpulse_lang",l); };
 
-  const saveToHistory = (result, imageUrl) => {
-    const entry = { id:Date.now(), date:new Date().toLocaleString(), class:result.class, confidence:(parseFloat(result.confidence)*100).toFixed(1), healthy:result.class.toLowerCase().includes("healthy"), imageUrl };
+  const saveToHistory = async (result, file) => {
+    const id = Date.now();
+    const imageUrl = URL.createObjectURL(file);
+    try {
+      await saveImageToDB(id, file);
+    } catch (err) {
+      console.error("Failed to save image to IndexedDB:", err);
+    }
+    const entry = { id, date:new Date().toLocaleString(), class:result.class, confidence:(parseFloat(result.confidence)*100).toFixed(1), healthy:result.class.toLowerCase().includes("healthy"), imageUrl };
     const updated = [entry,...history].slice(0,20);
     setHistory(updated);
   };
@@ -2027,7 +2035,7 @@ export const ImageUpload = ({
         axios.post(predictUrl, form, { headers:{"Content-Type":"multipart/form-data"} }),
         new Promise(resolve => setTimeout(resolve, 1500)),
       ]);
-      if (res.status === 200) { setData(res.data); saveToHistory(res.data, URL.createObjectURL(f)); }
+      if (res.status === 200) { setData(res.data); saveToHistory(res.data, f); }
     } catch(e) {
       if (e.response) setError(`Server error: ${e.response.data?.detail||e.response.statusText}`);
       else if (e.request) setError(t.serverError);
