@@ -1,0 +1,26 @@
+# Python virtual environments
+api/venv/
+api/.venv/
+ENV/
+env/
+
+# Python Cache
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Heavy models and temporary run files
+api/Plant_disease_model.h5
+api/tempCodeRunnerFile.py
+
+# Dataset folders (not needed for deployment)
+Pepper__bell___Bacterial_spot/
+Pepper__bell___healthy/
+Potato___Early_blight/
+Potato___Late_blight/
+Potato___healthy/
+Tomato/
