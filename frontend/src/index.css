@@ -100,4 +100,14 @@ code {
     font-size: 12px !important;
     padding: 6px 10px !important;
   }
-}
+}
+
+@media (max-width: 480px) {
+  .plant-nav button span {
+    display: none !important;
+  }
+  .plant-nav {
+    padding: 8px 12px !important;
+  }
+}
+

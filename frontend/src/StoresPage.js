@@ -248,7 +248,44 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
           background: ${darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)"} !important;
           transform: translateX(4px);
         }
+
+        .stores-container {
+          display: flex;
+          flex: 1;
+          height: calc(100vh - 65px);
+          overflow: hidden;
+        }
+        .stores-sidebar {
+          width: 380px;
+          display: flex;
+          flex-direction: column;
+          padding: 24px;
+          overflow-y: auto;
+        }
+        .stores-map-wrapper {
+          flex: 1;
+          position: relative;
+          height: 100%;
+        }
+        @media (max-width: 768px) {
+          .stores-container {
+            flex-direction: column-reverse !important;
+            height: calc(100vh - 100px) !important;
+          }
+          .stores-sidebar {
+            width: 100% !important;
+            height: 50% !important;
+            border-right: none !important;
+            border-top: 1px solid ${T.border} !important;
+            padding: 16px !important;
+          }
+          .stores-map-wrapper {
+            width: 100% !important;
+            height: 50% !important;
+          }
+        }
       `}</style>
+
 
       {/* Navigation Header */}
       <nav className="plant-nav" style={{ borderBottom: `1px solid ${T.border}`, background: darkMode ? "rgba(20,18,16,0.95)" : "rgba(247,245,240,0.95)" }}>
@@ -270,10 +307,10 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
       </nav>
 
       {/* Main split-screen container */}
-      <div style={{ display: "flex", flex: 1, height: "calc(100vh - 65px)", overflow: "hidden" }}>
+      <div className="stores-container">
         
         {/* Left sidebar: Geolocation trigger and store listing */}
-        <div style={{ width: 380, borderRight: `1px solid ${T.border}`, display: "flex", flexDirection: "column", padding: "24px", overflowY: "auto", background: darkMode ? "#1c1a18" : "#fbfaf7" }}>
+        <div className="stores-sidebar" style={{ borderRight: `1px solid ${T.border}`, background: darkMode ? "#1c1a18" : "#fbfaf7" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
             <h2 style={{ fontFamily: "'Lora', serif", fontSize: 20, color: T.text, fontWeight: 500, margin: 0 }}>
               📍 {t.nearbyStores}
@@ -365,7 +402,7 @@ export const StoresPage = ({ darkMode, lang, onBack }) => {
         </div>
 
         {/* Right side: Map container */}
-        <div style={{ flex: 1, position: "relative", height: "100%" }}>
+        <div className="stores-map-wrapper">
           <div id="leaflet-map" style={{ height: "100%", width: "100%", zIndex: 1 }} />
           {!stores && (
             <div style={{ position: "absolute", inset: 0, zIndex: 2, background: darkMode ? "rgba(20,18,16,0.8)" : "rgba(247,245,240,0.8)", backdropFilter: "blur(4px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20, textAlign: "center" }}>

@@ -175,7 +175,7 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
       </nav>
 
       {/* Main archive layout */}
-      <div style={{ flex: 1, maxWidth: 1100, width: "100%", margin: "0 auto", padding: "40px 24px" }}>
+      <div style={{ flex: 1, maxWidth: 1100, width: "100%", margin: "0 auto", padding: "clamp(20px, 5vw, 40px) clamp(12px, 3.5vw, 24px)" }}>
         
         {/* Title Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
@@ -229,7 +229,7 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
             </button>
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: 20 }}>
             {history.map((entry, index) => {
               const isDeleting = deletingIds.has(entry.id);
               const formattedName = entry.class.replace(/_/g, " ");
