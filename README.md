@@ -119,7 +119,7 @@ Because Render free instances limit resources to 512MB RAM, the backend has been
 - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 - **Web service type**: Python Web Service.
 
----
-
-## 📄 License
-This project is licensed under the MIT License.
+## 👨‍💻 Made By
+- **Aniket Kumar Singh**
+- **BTech CSE**
+- **VIT Bhopal University (2024-2028)**
