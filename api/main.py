@@ -7,15 +7,18 @@ from PIL import Image
 import math
 from pathlib import Path
 
-# Try to import tflite-runtime (standard on Render), fallback to tensorflow (for local development)
+# Try to import LiteRT (ai_edge_litert), tflite-runtime, or tensorflow
 try:
-    import tflite_runtime.interpreter as tflite
+    from ai_edge_litert.interpreter import Interpreter
 except ImportError:
     try:
-        import tensorflow.lite as tflite
+        from tflite_runtime.interpreter import Interpreter
     except ImportError:
-        import tensorflow as tf
-        tflite = tf.lite
+        try:
+            from tensorflow.lite import Interpreter
+        except ImportError:
+            import tensorflow as tf
+            Interpreter = tf.lite.Interpreter
 
 app = FastAPI()
 
@@ -35,7 +38,7 @@ output_details = None
 
 try:
     MODEL_PATH = Path(__file__).resolve().parent / "Plant_disease_model.tflite"
-    interpreter = tflite.Interpreter(model_path=str(MODEL_PATH))
+    interpreter = Interpreter(model_path=str(MODEL_PATH))
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
