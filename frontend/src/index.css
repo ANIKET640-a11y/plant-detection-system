@@ -20,3 +20,84 @@ code {
 .MuiDropzoneArea-text, .MuiDropzoneArea-icon {
   color: white !important;
 }
+
+/* Global Responsive Navigation Header */
+.plant-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding: 14px 28px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.plant-nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex: 1 !important;
+}
+
+.plant-nav-link {
+  background: none !important;
+  border: 0 !important;
+  color: inherit !important;
+  cursor: pointer !important;
+  font: 500 13px 'Jost', sans-serif !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  white-space: nowrap !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  opacity: 0.8 !important;
+}
+
+.plant-nav-link:hover {
+  background: rgba(90, 122, 90, 0.14) !important;
+  color: #8fb38f !important;
+  opacity: 1 !important;
+}
+
+.plant-nav-link.active {
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #5a7a5a !important;
+  border-radius: 8px 8px 0 0 !important;
+  background: rgba(90, 122, 90, 0.08) !important;
+}
+
+.plant-nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .plant-nav {
+    flex-wrap: wrap !important;
+    padding: 10px 16px !important;
+    gap: 8px !important;
+  }
+  .plant-nav-links {
+    order: 3 !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    padding: 6px 0 2px !important;
+    scrollbar-width: none !important; /* Firefox */
+  }
+  .plant-nav-links::-webkit-scrollbar {
+    display: none !important; /* Safari/Chrome */
+  }
+  .plant-nav-link {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+}

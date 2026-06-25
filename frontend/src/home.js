@@ -365,7 +365,52 @@ const css = `
       width: 100%;
     }
   }
+
+  /* Responsive Chat Widget Popup */
+  .chat-popup-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 380px;
+    height: 520px;
+    max-width: calc(100vw - 60px);
+    max-height: calc(100vh - 150px);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .chat-popup-container.maximized {
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 800px !important;
+    height: 700px !important;
+    max-width: calc(100vw - 60px) !important;
+    max-height: calc(100vh - 80px) !important;
+  }
+
+  @media (max-width: 600px) {
+    .chat-popup-container {
+      bottom: 0 !important;
+      right: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 80vh !important;
+      max-width: 100% !important;
+      max-height: 80vh !important;
+      border-radius: 20px 20px 0 0 !important;
+      border-bottom: none !important;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.2) !important;
+    }
+  }
 `;
+
 
 const ResultScanner = ({ t, darkMode, stage }) => {
   const T = darkMode ? THEME.dark : THEME.light;
@@ -2409,26 +2454,12 @@ export const ImageUpload = ({
 
       {/* Floating Chat Popup Window */}
       {aiChatOpen && (
-        <div style={{
-          position: "fixed",
-          bottom: isMaximized ? 30 : 100,
-          right: 30,
-          width: isMaximized ? 800 : 380,
-          height: isMaximized ? 700 : 520,
-          maxWidth: "calc(100vw - 60px)",
-          maxHeight: isMaximized ? "calc(100vh - 80px)" : "calc(100vh - 150px)",
+        <div className={`chat-popup-container ${isMaximized ? 'maximized' : ''}`} style={{
           background: T.cardBg,
           border: `1px solid ${T.cardBorder}`,
-          borderRadius: 16,
           boxShadow: T.shadow,
-          zIndex: 1000,
           display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          animation: "slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
+          flexDirection: "column"
         }}>
           {/* Chat content wrapper */}
           <div style={{ flex: 1, overflow: "hidden", position: "relative", display: "flex", flexDirection: "column" }}>

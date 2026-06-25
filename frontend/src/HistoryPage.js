@@ -156,18 +156,18 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
       `}</style>
 
       {/* Navigation Header */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, padding: "16px 32px", borderBottom: `1px solid ${T.border}`, background: darkMode ? "rgba(20,18,16,0.95)" : "rgba(247,245,240,0.95)", backdropFilter: "blur(14px)", position: "sticky", top: 0, zIndex: 100 }}>
+      <nav className="plant-nav" style={{ borderBottom: `1px solid ${T.border}`, background: darkMode ? "rgba(20,18,16,0.95)" : "rgba(247,245,240,0.95)" }}>
         <button onClick={() => onBack("home")} style={{ fontFamily: "'Lora', serif", fontSize: 18, color: T.text, background: "none", border: 0, cursor: "pointer", flexShrink: 0, display: "flex", alignItems: "center" }}>
           Plant<em style={{ color: "#5a7a5a", fontStyle: "italic" }}>Pulse</em>
           <span style={{ fontSize: 13, color: T.sub, marginLeft: 12, fontStyle: "normal" }}>Archive</span>
         </button>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flex: 1 }}>
-          <button onClick={() => onBack("home")} style={{ background: "none", border: 0, color: T.sub, cursor: "pointer", font: "500 12px 'Jost',sans-serif" }}>{t.navHome}</button>
-          <button onClick={() => onBack("scan")} style={{ background: "none", border: 0, color: T.sub, cursor: "pointer", font: "500 12px 'Jost',sans-serif" }}>{t.navScan}</button>
-          <button onClick={() => onBack("weather")} style={{ background: "none", border: 0, color: T.sub, cursor: "pointer", font: "500 12px 'Jost',sans-serif" }}>{t.navWeather}</button>
-          <button onClick={() => onBack("history")} style={{ background: "none", border: 0, color: T.text, cursor: "pointer", font: "600 12px 'Jost',sans-serif", borderBottom: "2px solid #5a7a5a", paddingBottom: 2 }}>⌕ {t.navHistory}</button>
-          <button onClick={() => onBack("plantpulse-ai")} style={{ background: "none", border: 0, color: T.sub, cursor: "pointer", font: "500 12px 'Jost',sans-serif" }}>✦ {t.navAI}</button>
-          <button onClick={() => onBack("stores")} style={{ background: "none", border: 0, color: T.sub, cursor: "pointer", font: "500 12px 'Jost',sans-serif" }}>📍 {t.navStores}</button>
+        <div className="plant-nav-links" style={{ color: T.sub }}>
+          <button className="plant-nav-link" onClick={() => onBack("home")}>{t.navHome}</button>
+          <button className="plant-nav-link" onClick={() => onBack("scan")}>{t.navScan}</button>
+          <button className="plant-nav-link" onClick={() => onBack("weather")}>{t.navWeather}</button>
+          <button className="plant-nav-link active" onClick={() => onBack("history")}>⌕ {t.navHistory}</button>
+          <button className="plant-nav-link" onClick={() => onBack("plantpulse-ai")}>✦ {t.navAI}</button>
+          <button className="plant-nav-link" onClick={() => onBack("stores")}>📍 {t.navStores}</button>
         </div>
         <button onClick={() => onBack("home")} style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 16px", fontSize: 13, color: T.sub, cursor: "pointer", flexShrink: 0 }}>
           {t.back}

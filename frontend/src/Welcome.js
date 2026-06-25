@@ -114,14 +114,14 @@ export const WelcomePage = ({ onEnter }) => {
         background: "rgba(28, 26, 22, 0.75)",
         border: "1px solid rgba(255, 255, 255, 0.08)",
         borderRadius: 24,
-        padding: "48px 40px",
+        padding: "clamp(24px, 6vw, 48px) clamp(16px, 5vw, 40px)",
         textAlign: "center",
         boxShadow: "0 20px 50px rgba(0, 0, 0, 0.6)"
       }}>
         {/* Logo Icon */}
         <div className="welcome-leaf" style={{
-          fontSize: 54,
-          marginBottom: 20,
+          fontSize: "clamp(36px, 10vw, 54px)",
+          marginBottom: "clamp(12px, 3vw, 20px)",
           display: "inline-block"
         }}>
           🌿
@@ -130,9 +130,9 @@ export const WelcomePage = ({ onEnter }) => {
         {/* Brand Name */}
         <h1 style={{
           fontFamily: "'Lora', serif",
-          fontSize: 38,
+          fontSize: "clamp(26px, 8vw, 38px)",
           fontWeight: 400,
-          marginBottom: 32,
+          marginBottom: "clamp(16px, 5vw, 32px)",
           letterSpacing: "0.5px"
         }}>
           Plant<span style={{ color: "#8fb38f", fontStyle: "italic" }}>Pulse</span>
@@ -142,23 +142,23 @@ export const WelcomePage = ({ onEnter }) => {
         <div style={{
           display: "flex",
           flexDirection: "column",
-          gap: 20,
-          marginBottom: 44,
-          padding: "0 10px"
+          gap: "clamp(12px, 4vw, 20px)",
+          marginBottom: "clamp(24px, 6vw, 44px)",
+          padding: "0 5px"
         }}>
           {/* English Greeting */}
           <div>
             <p style={{
-              fontSize: 18,
+              fontSize: "clamp(15px, 4.5vw, 18px)",
               fontWeight: 500,
-              lineHeight: 1.6,
+              lineHeight: 1.5,
               color: "#f0ece4",
               marginBottom: 4
             }}>
               Welcome to PlantPulse
             </p>
             <p style={{
-              fontSize: 14,
+              fontSize: "clamp(12px, 3.5vw, 14px)",
               color: "#9a9589",
               lineHeight: 1.5
             }}>
@@ -175,18 +175,18 @@ export const WelcomePage = ({ onEnter }) => {
           {/* Hindi Greeting */}
           <div>
             <p style={{
-              fontSize: 19,
+              fontSize: "clamp(16px, 4.8vw, 19px)",
               fontWeight: 500,
-              lineHeight: 1.6,
+              lineHeight: 1.5,
               color: "#f0ece4",
               marginBottom: 4
             }}>
               प्लांटपल्स में आपका स्वागत है
             </p>
             <p style={{
-              fontSize: 14,
+              fontSize: "clamp(12px, 3.5vw, 14px)",
               color: "#9a9589",
-              lineHeight: 1.6
+              lineHeight: 1.5
             }}>
               आपके पौधों के स्वास्थ्य का एआई साथी। बीमारियों की पहचान करें, स्थानीय जोखिम स्तर जानें और विशेषज्ञ सलाह पाएं।
             </p>
@@ -202,8 +202,8 @@ export const WelcomePage = ({ onEnter }) => {
             color: "#fff",
             border: "1px solid rgba(255, 255, 255, 0.1)",
             borderRadius: 14,
-            padding: "14px 44px",
-            fontSize: 16,
+            padding: "clamp(10px, 3vw, 14px) clamp(24px, 8vw, 44px)",
+            fontSize: "clamp(14px, 4vw, 16px)",
             fontWeight: 500,
             cursor: "pointer",
             outline: "none",
