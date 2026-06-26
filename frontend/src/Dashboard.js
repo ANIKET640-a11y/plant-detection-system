@@ -84,7 +84,7 @@ export const Dashboard = ({ history, darkMode, lang, onBack }) => {
           <button className="plant-nav-link" onClick={() => onBack("plantpulse-ai")}>✦ {t.navAI}</button>
           <button className="plant-nav-link" onClick={() => onBack("stores")}>📍 {t.navStores}</button>
         </div>
-        <button onClick={() => onBack("home")} style={{ background:"none", border:`1px solid ${T.border}`, borderRadius:8, padding:"6px 16px", fontSize:13, color:T.sub, cursor:"pointer", flexShrink:0 }}>
+        <button onClick={() => onBack("home")} style={{ background:"none", border:`1px solid ${T.border}`, borderRadius:8, padding:"6px 16px", fontSize:13, color:T.sub, cursor:"pointer", flexShrink:0, whiteSpace:"nowrap" }}>
           ← Back
         </button>
       </nav>
