@@ -13,6 +13,7 @@ function App() {
   const [aiChatOpen, setAiChatOpen] = useState(false);
   const [scrollTarget, setScrollTarget] = useState(null);
   const [restoredScan, setRestoredScan] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("plantpulse_history");
@@ -55,7 +56,10 @@ function App() {
   };
 
   if (page === "welcome") {
-    return <WelcomePage onEnter={() => setPage("home")} />;
+    return <WelcomePage onEnter={(userInfo) => {
+      setUser(userInfo);
+      setPage("home");
+    }} />;
   }
 
   return page === "dashboard"
@@ -85,6 +89,7 @@ function App() {
             clearScrollTarget={() => setScrollTarget(null)}
             restoredScan={restoredScan}
             clearRestoredScan={() => setRestoredScan(null)}
+            user={user}
           />;
 }
 

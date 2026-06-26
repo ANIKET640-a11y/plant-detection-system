@@ -328,6 +328,9 @@ const css = `
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
   }
+  @media (max-width: 480px) {
+    .nav-username-text { display: none !important; }
+  }
   
   .plant-layout-grid {
     display: flex;
@@ -1766,6 +1769,7 @@ export const ImageUpload = ({
   clearScrollTarget,
   restoredScan,
   clearRestoredScan,
+  user,
 }) => {
   const [preview, setPreview]     = useState(null);
   const [data, setData]           = useState(null);
@@ -2176,6 +2180,14 @@ export const ImageUpload = ({
           <button className="plant-nav-link" onClick={onDashboard}>▦ {t.navDashboard}</button>
         </div>
         <div className="plant-nav-actions" style={{ gap:8 }}>
+          {user && (
+            <div className="nav-profile-badge" style={{ display: "flex", alignItems: "center", gap: 6, padding: "5px 10px", background: T.toggleBg, border: `1px solid ${T.cardBorder}`, borderRadius: 8, fontSize: 12, color: T.text, flexShrink: 0 }}>
+              <div style={{ width: 16, height: 16, borderRadius: "50%", background: "#5a7a5a", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: "bold" }}>
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              <span style={{ fontWeight: 500 }} className="nav-username-text">{user.name}</span>
+            </div>
+          )}
           <div style={{ position:"relative" }}>
             <button onClick={()=>setLangOpen(!langOpen)} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, borderRadius:8, padding:"5px 12px", fontSize:12, color:T.text, cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}>
               🌐 {LANGS[lang].label} ▾
