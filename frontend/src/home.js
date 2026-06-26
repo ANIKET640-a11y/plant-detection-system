@@ -2200,7 +2200,7 @@ export const ImageUpload = ({
           )}
           <div style={{ position:"relative" }}>
             <button onClick={()=>setLangOpen(!langOpen)} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, borderRadius:8, padding:"5px 12px", fontSize:12, color:T.text, cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}>
-              🌐 {LANGS[lang].label} ▾
+              🌐 <span className="nav-btn-label">{LANGS[lang].label}</span><span className="nav-btn-short-label" style={{ display: "none" }}>{lang.toUpperCase()}</span> ▾
             </button>
             {langOpen && (
               <div style={{ position:"absolute", top:"calc(100% + 6px)", right:0, background:T.cardBg, border:`1px solid ${T.cardBorder}`, borderRadius:10, overflow:"hidden", boxShadow:T.shadow, zIndex:200, minWidth:140, animation:"fadeIn .15s ease" }}>

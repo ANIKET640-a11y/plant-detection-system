@@ -95,26 +95,56 @@ code {
 
 @media (max-width: 760px) {
   .plant-nav {
-    padding: 10px 16px !important;
+    padding: 10px 16px 8px 16px !important;
     gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+  .plant-nav > button:first-child,
+  .plant-nav > a:first-child {
+    order: 1 !important;
+    flex-grow: 1 !important;
+    text-align: left !important;
+  }
+  .plant-nav-actions {
+    order: 2 !important;
   }
   .plant-nav-links {
+    order: 3 !important;
+    width: 100% !important;
+    flex: none !important;
     justify-content: flex-start !important;
-    padding: 0 4px !important;
+    padding: 8px 0 2px 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    margin-top: 6px !important;
   }
   .plant-nav-link {
     font-size: 12px !important;
     padding: 6px 10px !important;
   }
+  .nav-profile-badge {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 4px !important;
+  }
 }
 
 @media (max-width: 480px) {
-  .plant-nav button span {
+  .plant-nav button span:not(.nav-btn-short-label) {
     display: none !important;
   }
   .plant-nav {
-    padding: 8px 10px !important;
+    padding: 8px 10px 6px 10px !important;
     gap: 6px !important;
+  }
+}
+
+.nav-btn-short-label {
+  display: none !important;
+}
+@media (max-width: 480px) {
+  .nav-btn-short-label {
+    display: inline !important;
   }
 }
 
