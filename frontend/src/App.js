@@ -55,11 +55,19 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    setPage("welcome");
+  };
+
   if (page === "welcome") {
-    return <WelcomePage onEnter={(userInfo) => {
-      setUser(userInfo);
-      setPage("home");
-    }} />;
+    return <WelcomePage 
+      user={user}
+      onEnter={(userInfo) => {
+        setUser(userInfo);
+        if (userInfo) setPage("home");
+      }}
+    />;
   }
 
   return page === "dashboard"
@@ -90,6 +98,8 @@ function App() {
             restoredScan={restoredScan}
             clearRestoredScan={() => setRestoredScan(null)}
             user={user}
+            onLogout={handleLogout}
+            onWelcome={() => setPage("welcome")}
           />;
 }
 
