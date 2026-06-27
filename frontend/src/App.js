@@ -128,9 +128,12 @@ function App() {
   };
 
   const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem("plantpulse_active_user");
-    navigate("/welcome");
+    const confirmLogout = window.confirm("Are you sure you want to logout? / क्या आप वाकई लॉग आउट करना चाहते हैं?");
+    if (confirmLogout) {
+      setUser(null);
+      localStorage.removeItem("plantpulse_active_user");
+      navigate("/welcome");
+    }
   };
 
   if (!user) {
@@ -162,8 +165,8 @@ function App() {
       <WelcomePage 
         user={user}
         onEnter={(userInfo) => {
-          setUser(userInfo);
           if (userInfo) {
+            setUser(userInfo);
             localStorage.setItem("plantpulse_active_user", JSON.stringify(userInfo));
             const queryParams = new URLSearchParams(window.location.search);
             const redirectPath = queryParams.get("redirect");
@@ -173,8 +176,12 @@ function App() {
               navigate("/home");
             }
           } else {
-            localStorage.removeItem("plantpulse_active_user");
-            navigate("/welcome");
+            const confirmLogout = window.confirm("Are you sure you want to sign out? / क्या आप वाकई लॉग आउट करना चाहते हैं?");
+            if (confirmLogout) {
+              setUser(null);
+              localStorage.removeItem("plantpulse_active_user");
+              navigate("/welcome");
+            }
           }
         }}
       />
