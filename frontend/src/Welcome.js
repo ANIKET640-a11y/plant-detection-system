@@ -595,9 +595,12 @@ export const WelcomePage = ({ user, onEnter }) => {
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {isSignup && (
                   <div>
-                    <label style={{ display: "block", fontSize: 12, fontWeight: 500, color: "#9a9589", marginBottom: 6 }}>Full Name</label>
+                    <label htmlFor="auth-name" style={{ display: "block", fontSize: 12, fontWeight: 500, color: "#9a9589", marginBottom: 6 }}>Full Name</label>
                     <input
+                      id="auth-name"
                       type="text"
+                      name="name"
+                      autoComplete="name"
                       className="auth-input"
                       placeholder="John Doe"
                       value={name}
@@ -608,9 +611,12 @@ export const WelcomePage = ({ user, onEnter }) => {
                 )}
 
                 <div>
-                  <label style={{ display: "block", fontSize: 12, fontWeight: 500, color: "#9a9589", marginBottom: 6 }}>Email Address</label>
+                  <label htmlFor="auth-email" style={{ display: "block", fontSize: 12, fontWeight: 500, color: "#9a9589", marginBottom: 6 }}>Email Address</label>
                   <input
+                    id="auth-email"
                     type="email"
+                    name="username"
+                    autoComplete="username"
                     className="auth-input"
                     placeholder="you@example.com"
                     value={email}
@@ -620,9 +626,12 @@ export const WelcomePage = ({ user, onEnter }) => {
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: 12, fontWeight: 500, color: "#9a9589", marginBottom: 6 }}>Password</label>
+                  <label htmlFor="auth-password" style={{ display: "block", fontSize: 12, fontWeight: 500, color: "#9a9589", marginBottom: 6 }}>Password</label>
                   <input
+                    id="auth-password"
                     type="password"
+                    name="password"
+                    autoComplete={isSignup ? "new-password" : "current-password"}
                     className="auth-input"
                     placeholder="••••••••"
                     value={password}

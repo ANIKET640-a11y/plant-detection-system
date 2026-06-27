@@ -2169,17 +2169,39 @@ export const ImageUpload = ({
     <>
       <style>{css}</style>
       <nav className="plant-nav" style={{ borderBottom:`1px solid ${T.navBorder}`, background:T.navBg, position:"sticky", top:0, zIndex:100 }}>
-        <button onClick={()=>scrollTo("home")} style={{ fontFamily:"'Lora', serif", fontSize:18, color:T.text, background:"none", border:0, cursor:"pointer", flexShrink:0 }}>
-          Plant<em style={{ color:"#5a7a5a", fontStyle:"italic" }}>Pulse</em>
+        <button onClick={()=>scrollTo("home")} style={{ fontFamily:"'Lora', serif", fontSize:18, color:T.text, background:"none", border:0, cursor:"pointer", flexShrink:0, display:"flex", alignItems:"center", gap:8 }}>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5a7a5a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22C2 12 10 4 22 2c0 10-8 18-20 20z"/><path d="M9 15l3-3"/></svg>
+          <span style={{ fontWeight: 600 }}>Plant<span style={{ color: "#5a7a5a", fontStyle: "italic" }}>Pulse</span></span>
         </button>
         <div className="plant-nav-links" style={{ color:T.btnText }}>
-          <button className="plant-nav-link" onClick={()=>scrollTo("home")}>{t.navHome}</button>
-          <button className="plant-nav-link" onClick={()=>scrollTo("scan")}>{t.navScan}</button>
-          <button className="plant-nav-link" onClick={()=>scrollTo("weather")}>{t.navWeather}</button>
-          <button className="plant-nav-link" onClick={onHistory}>⌕ {t.navHistory}</button>
-          <button className="plant-nav-link" onClick={()=>setAiChatOpen(true)}>✦ {t.navAI}</button>
-          <button className="plant-nav-link" onClick={onStores}>📍 {t.navStores}</button>
-          <button className="plant-nav-link" onClick={onDashboard}>▦ {t.navDashboard}</button>
+          <button className="plant-nav-link" onClick={()=>scrollTo("home")}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            {t.navHome}
+          </button>
+          <button className="plant-nav-link" onClick={()=>scrollTo("scan")}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            {t.navScan}
+          </button>
+          <button className="plant-nav-link" onClick={()=>scrollTo("weather")}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg>
+            {t.navWeather}
+          </button>
+          <button className="plant-nav-link" onClick={onHistory}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><polyline points="11 5 11 11 14 14"/></svg>
+            {t.navHistory}
+          </button>
+          <button className="plant-nav-link" onClick={()=>setAiChatOpen(true)}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            {t.navAI}
+          </button>
+          <button className="plant-nav-link" onClick={onStores}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            {t.navStores}
+          </button>
+          <button className="plant-nav-link" onClick={onDashboard}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            {t.navDashboard}
+          </button>
         </div>
         <div className="plant-nav-actions" style={{ gap:8 }}>
           <button onClick={onWelcome} style={{ background: T.toggleBg, border: `1px solid ${T.cardBorder}`, borderRadius: 8, padding: "5px 12px", fontSize: 12, color: T.text, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
