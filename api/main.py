@@ -6,6 +6,35 @@ from io import BytesIO
 from PIL import Image
 import math
 from pathlib import Path
+import sqlite3
+from pydantic import BaseModel
+
+DB_PATH = Path(__file__).resolve().parent / "users.db"
+
+def init_db():
+    conn = sqlite3.connect(str(DB_PATH))
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+init_db()
+
+class SignupRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
 
 # Try to import LiteRT (ai_edge_litert), tflite-runtime, or tensorflow
 try:
@@ -115,6 +144,39 @@ async def predict(file: UploadFile = File(...)):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
+
+@app.post("/signup")
+async def signup(req: SignupRequest):
+    conn = sqlite3.connect(str(DB_PATH))
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+            (req.name.strip(), req.email.strip().lower(), req.password)
+        )
+        conn.commit()
+        return {"name": req.name.strip(), "email": req.email.strip().lower()}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Email is already registered.")
+    finally:
+        conn.close()
+
+@app.post("/login")
+async def login(req: LoginRequest):
+    conn = sqlite3.connect(str(DB_PATH))
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT name, password FROM users WHERE email = ?",
+        (req.email.strip().lower(),)
+    )
+    row = cursor.fetchone()
+    conn.close()
+    if not row:
+        raise HTTPException(status_code=404, detail="Account not found. Please sign up first.")
+    name, db_password = row
+    if db_password != req.password:
+        raise HTTPException(status_code=401, detail="Incorrect password. Please try again.")
+    return {"name": name, "email": req.email.strip().lower()}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

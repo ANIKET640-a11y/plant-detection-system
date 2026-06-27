@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const BG_URL = "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=1920&q=80";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 export const WelcomePage = ({ user, onEnter }) => {
   const [exiting, setExiting] = useState(false);
@@ -36,16 +37,19 @@ export const WelcomePage = ({ user, onEnter }) => {
     }, 600);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
+    const trimmedEmail = email.trim().toLowerCase();
+    const trimmedName = name.trim();
+
     if (isSignup) {
-      if (!name.trim()) {
+      if (!trimmedName) {
         setError("Please enter your name / कृपया अपना नाम दर्ज करें");
         return;
       }
-      if (!email.trim() || !email.includes("@")) {
+      if (!trimmedEmail || !trimmedEmail.includes("@")) {
         setError("Please enter a valid email / कृपया सही ईमेल दर्ज करें");
         return;
       }
@@ -54,28 +58,61 @@ export const WelcomePage = ({ user, onEnter }) => {
         return;
       }
 
-      // Check if email already registered
-      const users = getRegisteredUsers();
-      if (users.some(u => u.email.toLowerCase() === email.trim().toLowerCase())) {
-        setError("Email is already registered. Please log in. / ईमेल पहले से पंजीकृत है। कृपया लॉग इन करें।");
-        return;
-      }
-
       setLoading(true);
-      setTimeout(() => {
-        const newUser = { name: name.trim(), email: email.trim().toLowerCase(), password };
+      try {
+        // Try to signup on the backend
+        const response = await fetch(`${API_URL.replace(/\/$/, "")}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: trimmedName, email: trimmedEmail, password })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json();
+          throw new Error(errData.detail || "Signup failed on server.");
+        }
+
+        const data = await response.json();
+        // Save local backup
+        const newUser = { name: trimmedName, email: trimmedEmail, password };
         saveRegisteredUser(newUser);
+
         setLoading(false);
         handleEnter({
-          name: newUser.name,
-          email: newUser.email,
+          name: data.name,
+          email: data.email,
           authMethod: "email"
         });
-      }, 1200);
+      } catch (err) {
+        console.error("Signup server error, falling back to local storage:", err);
+
+        // Check if email already registered locally
+        const users = getRegisteredUsers();
+        if (users.some(u => u.email.toLowerCase() === trimmedEmail)) {
+          setLoading(false);
+          setError("Email is already registered. Please log in. / ईमेल पहले से पंजीकृत है। कृपया लॉग इन करें।");
+          return;
+        }
+
+        // If it's a network error or down, allow local signup
+        if (err.message.includes("Failed to fetch") || err.message.includes("NetworkError") || err.message.includes("server error")) {
+          const newUser = { name: trimmedName, email: trimmedEmail, password };
+          saveRegisteredUser(newUser);
+          setLoading(false);
+          handleEnter({
+            name: newUser.name,
+            email: newUser.email,
+            authMethod: "email"
+          });
+        } else {
+          setLoading(false);
+          setError(err.message || "An error occurred during signup.");
+        }
+      }
 
     } else {
       // Log In
-      if (!email.trim() || !email.includes("@")) {
+      if (!trimmedEmail || !trimmedEmail.includes("@")) {
         setError("Please enter a valid email / कृपया सही ईमेल दर्ज करें");
         return;
       }
@@ -84,27 +121,81 @@ export const WelcomePage = ({ user, onEnter }) => {
         return;
       }
 
-      const users = getRegisteredUsers();
-      const match = users.find(u => u.email.toLowerCase() === email.trim().toLowerCase());
-
-      if (!match) {
-        setError("Account not found. Please sign up first. / खाता नहीं मिला। कृपया पहले साइन अप करें।");
-        return;
-      }
-      if (match.password !== password) {
-        setError("Incorrect password. Please try again. / गलत पासवर्ड। कृपया पुनः प्रयास करें।");
-        return;
-      }
-
       setLoading(true);
-      setTimeout(() => {
+      try {
+        // Try to login on the backend
+        const response = await fetch(`${API_URL.replace(/\/$/, "")}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: trimmedEmail, password })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json();
+          // If the account was not found on the server (e.g. database wiped), check local backup to heal the server!
+          if (response.status === 404) {
+            const users = getRegisteredUsers();
+            const match = users.find(u => u.email.toLowerCase() === trimmedEmail);
+            if (match && match.password === password) {
+              // Self-heal: register the user back on the server
+              const signupResponse = await fetch(`${API_URL.replace(/\/$/, "")}/signup`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: match.name, email: match.email, password: match.password })
+              });
+              if (signupResponse.ok) {
+                const signupData = await signupResponse.json();
+                setLoading(false);
+                handleEnter({
+                  name: signupData.name,
+                  email: signupData.email,
+                  authMethod: "email"
+                });
+                return;
+              }
+            }
+          }
+          throw new Error(errData.detail || "Login failed on server.");
+        }
+
+        const data = await response.json();
+        // Ensure user is in local backup
+        const users = getRegisteredUsers();
+        if (!users.some(u => u.email.toLowerCase() === trimmedEmail)) {
+          saveRegisteredUser({ name: data.name, email: trimmedEmail, password });
+        }
+
+        setLoading(false);
+        handleEnter({
+          name: data.name,
+          email: data.email,
+          authMethod: "email"
+        });
+      } catch (err) {
+        console.error("Login server error, falling back to local storage:", err);
+        
+        // Fallback to local storage
+        const users = getRegisteredUsers();
+        const match = users.find(u => u.email.toLowerCase() === trimmedEmail);
+
+        if (!match) {
+          setLoading(false);
+          setError("Account not found. Please sign up first. / खाता नहीं मिला। कृपया पहले साइन अप करें।");
+          return;
+        }
+        if (match.password !== password) {
+          setLoading(false);
+          setError("Incorrect password. Please try again. / गलत पासवर्ड। कृपया पुनः प्रयास करें।");
+          return;
+        }
+
         setLoading(false);
         handleEnter({
           name: match.name,
           email: match.email,
           authMethod: "email"
         });
-      }, 1200);
+      }
     }
   };
 
