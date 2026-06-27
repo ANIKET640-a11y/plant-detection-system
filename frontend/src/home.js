@@ -2204,25 +2204,29 @@ export const ImageUpload = ({
           </button>
         </div>
         <div className="plant-nav-actions" style={{ gap:8 }}>
-          <button onClick={onWelcome} style={{ background: T.toggleBg, border: `1px solid ${T.cardBorder}`, borderRadius: 8, padding: "5px 12px", fontSize: 12, color: T.text, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-            ← <span className="nav-btn-label">Welcome</span>
+          <button className="nav-action-btn" onClick={onWelcome} style={{ background: T.toggleBg, border: `1px solid ${T.cardBorder}`, color: T.text, flexShrink: 0 }}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <span className="nav-btn-label">Welcome</span>
           </button>
           {user && (
             <>
-              <div className="nav-profile-badge" style={{ display: "flex", alignItems: "center", gap: 6, padding: "5px 10px", background: T.toggleBg, border: `1px solid ${T.cardBorder}`, borderRadius: 8, fontSize: 12, color: T.text, flexShrink: 0 }}>
-                <div style={{ width: 16, height: 16, borderRadius: "50%", background: "#5a7a5a", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: "bold" }}>
+              <div className="nav-profile-badge" style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", background: T.toggleBg, border: `1px solid ${T.cardBorder}`, borderRadius: 8, fontSize: 13, color: T.text, flexShrink: 0, fontWeight: 500, fontFamily: "'Jost', sans-serif" }}>
+                <div style={{ width: 18, height: 18, borderRadius: "50%", background: "#5a7a5a", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: "bold" }}>
                   {user.name.charAt(0).toUpperCase()}
                 </div>
-                <span style={{ fontWeight: 500 }} className="nav-username-text">{user.name}</span>
+                <span className="nav-username-text">{user.name}</span>
               </div>
-              <button onClick={onLogout} style={{ background: T.toggleBg, border: `1px solid ${T.cardBorder}`, borderRadius: 8, padding: "5px 12px", fontSize: 12, color: "#ff8a80", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-                🚪 <span className="nav-btn-label" style={{ color: T.text }}>Logout</span>
+              <button className="nav-action-btn" onClick={onLogout} style={{ background: T.toggleBg, border: `1px solid ${T.cardBorder}`, color: "#ff8a80", flexShrink: 0 }}>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span className="nav-btn-label" style={{ color: T.text }}>Logout</span>
               </button>
             </>
           )}
           <div style={{ position:"relative" }}>
-            <button onClick={()=>setLangOpen(!langOpen)} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, borderRadius:8, padding:"5px 12px", fontSize:12, color:T.text, cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}>
-              🌐 <span className="nav-btn-label">{LANGS[lang].label}</span><span className="nav-btn-short-label" style={{ display: "none" }}>{lang.toUpperCase()}</span> ▾
+            <button className="nav-action-btn" onClick={()=>setLangOpen(!langOpen)} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, color:T.text }}>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span className="nav-btn-label">{LANGS[lang].label}</span><span className="nav-btn-short-label" style={{ display: "none" }}>{lang.toUpperCase()}</span>
+              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 2 }}><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             {langOpen && (
               <div style={{ position:"absolute", top:"calc(100% + 6px)", right:0, background:T.cardBg, border:`1px solid ${T.cardBorder}`, borderRadius:10, overflow:"hidden", boxShadow:T.shadow, zIndex:200, minWidth:140, animation:"fadeIn .15s ease" }}>
@@ -2234,8 +2238,12 @@ export const ImageUpload = ({
               </div>
             )}
           </div>
-          <button onClick={toggleDark} aria-label={darkMode?"Use light theme":"Use dark theme"} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, borderRadius:8, padding:"5px 10px", fontSize:16, cursor:"pointer", lineHeight:1 }}>
-            {T.toggleIcon}
+          <button className="nav-action-btn" onClick={toggleDark} aria-label={darkMode?"Use light theme":"Use dark theme"} style={{ background:T.toggleBg, border:`1px solid ${T.cardBorder}`, padding:"6px 10px", color: T.text }}>
+            {darkMode ? (
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#ffb300" }}><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#5a5248" }}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            )}
           </button>
         </div>
       </nav>

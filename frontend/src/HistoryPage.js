@@ -227,7 +227,8 @@ export const HistoryPage = ({ history, setHistory, darkMode, lang, onBack, onRes
             {t.navStores}
           </button>
         </div>
-        <button onClick={() => onBack("home")} style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 16px", fontSize: 13, color: T.sub, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }}>
+        <button className="nav-action-btn" onClick={() => onBack("home")} style={{ background: "none", border: `1px solid ${T.border}`, color: T.sub, flexShrink: 0 }}>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           {t.back}
         </button>
       </nav>
